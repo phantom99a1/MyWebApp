@@ -168,17 +168,17 @@ class Insert extends React.Component<Iprops, Istates>
                     </div>
                     <div style={{padding:'10px 0px'}}>
                     <label>Ngày sinh </label>                   
-                    <DatePicker 
+                    <DatePicker                         
                         selectedDate={item.DOB}                       
                         onChange={(e)=>{
                             item.DOB=e
                             this.setState({emp:item})
-                        }}
+                        }}                        
+                        placeholder='Date picker placeholder'
                     />
                     </div>
                     
-                    <label>Giới tính</label>
-                    {/* Chuyển sang dạng combobox, dữ liệu option lấy từ api (bổ sung api trả về dạng List<KeyValuePair<int, string>>) (done) */}
+                    <label>Giới tính</label>              
                     
                     <ComboBox textField="Value" valueField="Key"
                     className="sm-combobox w-50"
@@ -191,7 +191,7 @@ class Insert extends React.Component<Iprops, Istates>
                     />
                 
                 {this.state.emps_cert.map((emp_cert: Employee_Cert, index) => {
-                    return (<div key={index} style={{display: 'flex', position: 'relative', margin: '5px 15px', padding: '5px', gap: '20px' }}>
+                    return (<div key={index} style={{display: 'flex', position: 'relative', margin: '15px 5px', gap: '20px' }}>
                         <label>Cert_Name</label>
                         <TextBox style={{ width: '200px' }}
                             value={emp_cert.Cert_Name || ''}
@@ -212,7 +212,7 @@ class Insert extends React.Component<Iprops, Istates>
                 })}
 
                 <div style={{ margin: '10px 10px' }}>
-                    <span style={{ margin: '10px' }}>Thêm giấy tờ </span>
+                    <span style={{margin: '10px' }}>Thêm giấy tờ </span>
                     <SMButton className="btn btn-primary"
                         onClick={() => { this.insertCert() }}
                     >+</SMButton>

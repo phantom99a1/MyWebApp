@@ -18,8 +18,8 @@ export default class Home extends React.Component<iProp, iState> {
             <div className="layout-main">
                 <div className="card card-w-title">
                     <div className="p-grid">
-                        <div className="p-col-3">
-                        HOME PAGE
+                        <div className="p-col-3 text-center">
+                            HOME PAGE
                         </div>
                         <div className="p-col-3">
                         </div>

@@ -33,7 +33,7 @@ export default class CheckBox extends Component<iProp, iState> {
                     checked={this.props.checked ?? false} // Nếu checked = undefiend/null thì set về false
                     onChange={() => this.handleOnChange()} />
                 <span className="checkmark" />
-                {this.props.text != undefined ? <span style={{ padding: 3 }}>{this.props.text}</span> : <></>}
+                {this.props.text !== undefined ? <span style={{ padding: 3 }}>{this.props.text}</span> : <></>}
             </label>
         )
     }

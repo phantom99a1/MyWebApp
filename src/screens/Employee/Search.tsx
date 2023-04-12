@@ -13,6 +13,7 @@ import ApiUrl from "../../constants/ApiUrl";
 import { Link } from "react-router-dom";
 import { RouteUrls } from "../RouteManager";
 import SMButton from "../../components/SMButton";
+import CheckBox from "../../components/CheckBox";
 interface istates{
     Filter?: Employee;
     Employee?: Employee;
@@ -121,20 +122,7 @@ class Search extends React.Component<iprops, istates> {
         this.setState({
             totalPage: totalPage
         })
-    }
-
-    handleDelete(e:any, Employee:Employee):void{
-        if(e.target.checked){            
-            this.setState({
-                SelectData:[...this.state.SelectData!,Employee]
-            }   )            
-        }   
-        else {
-            this.setState({
-                SelectData:this.state.SelectData?.filter(m=> m !== Employee)
-            })
-        }           
-    }
+    }   
 
     pagination(pageNumber:number):Array<number>{
         let arr=new Array<number>();
@@ -235,14 +223,20 @@ class Search extends React.Component<iprops, istates> {
                                                 let gt= this.state.GioiTinh?.find( m => m.Key===item.Gender)?.Value;                                                
                                                 return (
                                                     <tr key={index}>
-                                                       {this.state.checkBox && <td>
-                                                            <input 
-                                                            style={{position:'relative'}}
-                                                            type="checkbox"
-                                                            className="form-check-input" 
-                                                            defaultChecked={false}
-                                                            onChange={(e)=>this.handleDelete(e,item)}/>
-                                                        </td> }
+                                                       {this.state.checkBox && 
+                                                       <td>                                                            
+                                                            <CheckBox
+                                                            checked={item.isChecked}
+                                                            onChange={()=>{
+                                                               let ResultEmployees = this.state.ResultEmployees!
+                                                               ResultEmployees[index].isChecked = !item.isChecked
+                                                               this.setState({
+                                                                ResultEmployees,
+                                                                SelectData:ResultEmployees.filter(m=>m.isChecked===true)
+                                                            })}}                                                            
+                                                            />
+                                                        </td> 
+                                                        }
                                                         <td >{item.Employee_ID}</td>
                                                         <td>{item.User_Name}</td>
                                                         <td>{item.Name}</td>
@@ -252,13 +246,7 @@ class Search extends React.Component<iprops, istates> {
                                                         {/* Chuyển dùng DOB -> format về dạng dd/MM/yyyy (moment) (done)*/}
                                                         <td>{moment(item.DOB).format("DD/MM/yyyy")}</td>
                                                         <td>{item.Certificate}</td> 
-                                                        <td className="col-2"> 
-                                                        {/* <button className="btn btn-primary" onClick={() => {                                                            
-                                                                this.toggle();                                                                                                                          
-                                                                this.setState({Employee:item})                                                                
-                                                                }
-                                                            }
-                                                            >Sửa </button> */}
+                                                        <td className="col-2">                                                     
                                                             <Link className="btn btn-primary" 
                                                             style={{color:'white'}} to={`${RouteUrls.Edit}/${item.Employee_ID}` }>Sửa</Link>
                                                             &nbsp;                                                             
@@ -294,7 +282,7 @@ class Search extends React.Component<iprops, istates> {
                                 <option value={7}>7</option>
                                 <option value={10}>10</option>
                             </select>   
-                            <div style={{ display:'flex', width:'80%', height:'70%', justifyContent:'center', alignItems:'center'}}>
+                            <div style={{ display:'flex', width:'80%', height:'70%', justifyContent:'center', textAlign:'center'}}>
                                 {/* về trang 1 */}
                                 <SMButton className={classNames([styles.pageItem, styles.sides].join(' '))}
                                 enable={this.state.currentPage!==0} 
@@ -329,19 +317,19 @@ class Search extends React.Component<iprops, istates> {
                                 </SMButton>)
                                 }
                                 {this.state.currentPage! >pageStep-2 && (
-                                <button className={styles.pageItem}
+                                <SMButton className={styles.pageItem}
                                 onClick={()=>this.setState({
                                     currentPage:this.state.currentPage!-pageStep+2
                                 },()=>this.loadData())}>
                                     {this.state.currentPage!-pageStep+3}
-                                </button>)}
+                                </SMButton>)}
                                 {this.state.currentPage! !==0 && this.state.currentPage! !==this.state.totalPage!-1&&(
-                                    <button className={[styles.pageItem, styles.active].join(' ')}
+                                    <SMButton className={[styles.pageItem, styles.active].join(' ')}
                                     onClick={()=>this.setState({
                                         currentPage:this.state.currentPage! 
                                     },()=>this.loadData())}>
                                         {this.state.currentPage!+1}
-                                    </button>
+                                    </SMButton>
                                 )}
                                 {this.state.currentPage! <this.state.totalPage! -pageStep+1&& (
                                     <SMButton className={styles.pageItem}

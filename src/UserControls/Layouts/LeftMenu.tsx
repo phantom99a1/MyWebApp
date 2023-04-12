@@ -39,7 +39,9 @@ export default class LeftMenu extends Component<iProps, iState> {
                 <ul id="main-menu" className="main-menu">
                     <li className="active-menu">
                         <span>
-                            <i className="fas fa-home"></i>
+                            <i className="fas fa-home"></i>                            
+                            <i className="fas fa-search"></i>                            
+                            <i className="fas fa-list"></i>                            
                         </span>
                         <div className="sub-menu active">
                             <div className="column">
